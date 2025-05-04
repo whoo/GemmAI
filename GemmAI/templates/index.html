@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}{{info.name}}{% endblock %}
+
+{% block content %}
+   <div class="container bg-light" id="chat">
+
+   	<div class="row" >
+		<div class="col-md-10 question my-4" >
+			<textarea class="form-control" rows=4>...</textarea><br>
+	<button class="btn btn-primary valide"> <i class="bi bi-command"></i>+ <i class="bi bi-arrow-return-left"></i> </button>
+		</div>
+	</div>
+
+   </div>
+
+<script>
+
+
+var dt=0;
+var question=0;
+
+window.onload=function() {
+
+var converter = new showdown.Converter({tables: 'true'} );
+
+const q='<div class="row" ><div class="col-md-10 question my-4" ><textarea class="form-control" rows=4>...</textarea><br>'
+       +'<button class="btn btn-primary valide"> <i class="bi bi-command"></i>+ <i class="bi bi-arrow-return-left"></i> </button>'
+       +'</div></div>';
+
+
+
+
+ajx=(e) => {
+	text=e.target.parentElement.children[0].value;
+	value={ text: text}
+        e.target.parentElement.children[0].disabled=true;
+	if (question)
+	{
+		value['previous']=$("#rep"+question).text();
+	}
+
+
+	loader='<div class="row d-flex justify-content-center" id="status"><div class="spinner-border" role="status"> <span class="sr-only"></span> </div></div>';
+	$("#chat").append(loader);
+
+	question=question+1;
+	$.ajax({
+url: "/chat",
+dataType: "json",
+type: "POST",
+contentType: "application/json",
+data: JSON.stringify(value),
+success: (v) => {
+ans="<div class='row'>"
++"<textarea id=rep"+question+" style='display:none'>"+v.msg+"</textarea>"
++"<div class='offset-md-2 col-md-10 card '>"
++converter.makeHtml(v.msg)
++"</div>"
++"</div>";
+$("#status").remove();
+
+$(".valide").off("click");
+$(".btn").remove();
+$("#chat").append(ans);
+$("#chat").append(q);
+
+$(".valide").click(ajx);
+
+$("textarea").on("keydown", function(event) {
+        if ( (event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault();
+        ajx(event);
+        }
+});
+
+
+} 
+});
+
+};
+
+
+
+
+
+$(".valide").on('click', ajx);
+$("textarea").on("keydown", function(event) {
+        if ( (event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault();
+        ajx(event);
+	}
+});
+
+
+//ans=$(".question").html()
+//$("#chat").append(ans);
+
+
+}
+
+
+</script>
+
+{% endblock %}
