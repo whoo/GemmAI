@@ -5,17 +5,14 @@ Il utilise l'API Google Gemini pour générer des réponses et s'appuie sur un b
 L'objectif principal de cette expérimentation est de comprendre comment intégrer et exploiter les capacités de l'API Google Gemini dans une application web simple.
 
 
-# Start
-Quick start
+# Démarrage
 
 ## Mise à jour .env
 
 * api key de google
 * nom de l'application
 
-L'api key pour google se génére facilement dans l' [aistudio](https://aistudio.google.com/apikey)
-
-
+L'api key pour google se génére facilement dans l'[aistudio](https://aistudio.google.com/apikey)
 
 ## Lancement
 
