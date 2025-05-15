@@ -1,8 +1,25 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}{{info.name}}{% endblock %}
 
 {% block content %}
+
+<div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'message' %}
+              <div class="alert alert-warning" role="alert">
+            {% else %}
+              <div class="alert alert-{{ category }}" role="alert">
+            {% endif %}
+              {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %}
+  {% endwith %}
+</div>
+
    <div class="container bg-light" id="chat">
 
    	<div class="row" >
@@ -96,10 +113,15 @@ $("textarea").on("keydown", function(event) {
 //ans=$(".question").html()
 //$("#chat").append(ans);
 
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+
 
 }
-
-
 </script>
 
 {% endblock %}
+
