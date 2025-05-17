@@ -23,6 +23,19 @@ class User(Base, UserMixin ):
       def __repr__(self) -> str:
           return f"User({self.username}-{self.id})"
 
+      def save(self):
+          self.query.session.add(self)
+          return self.query.session.commit()
+      
+      def delete(self):
+          self.query.session.delete(self)
+          r=self.query.session.commit()
+          self.id=None
+          self.username=None
+          self.password=None
+          return r
+
+
       def setpassword(self,password):
           cr = generate_password_hash(password)
           self.password=cr

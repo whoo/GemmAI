@@ -5,3 +5,4 @@ Flask-WTF
 Flask-SqlAlchemy
 Flask-migrate
 Flask-login
+gunicorn

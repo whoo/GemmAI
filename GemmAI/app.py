@@ -55,22 +55,11 @@ with app.app_context():
 
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id)
     user=User.query.get(user_id)
+    app.logger.info(user)
     return user
 
 
-
-def llload_user(user_id):
-    print(user_id)
-    try:
-       r= User.query.filter(User.id==user_id).first()
-       print("no error")
-       return r
-    except :
-       print("error")
-       pass
-    return User.query.first()
 
 class info:
    name:str = app.name
@@ -82,7 +71,6 @@ app.jinja_env.globals['info']=info()
 
 @app.route('/')
 def index():
-    print(flask_login.current_user)
     return render_template('index.html')
 
 class resp():
@@ -106,7 +94,6 @@ def login():
     
         else:
            flash("Erreur de login","danger")
-        print(f"Current User: {flask_login.current_user}")
         return redirect(url_for('index'))
 
     return render_template("login.html",form=form)
@@ -118,7 +105,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/chat",methods=['GET','POST'])
+@app.route("/chat",methods=['POST'])
 @flask_login.login_required
 def chat():
     info=request.get_json()
