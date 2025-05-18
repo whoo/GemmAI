@@ -9,19 +9,32 @@ L'objectif principal de cette expérimentation est de comprendre comment intégr
 
 ## Mise à jour .env
 
-* api key de google
-* nom de l'application
+* api key de google API="..."
+* nom de l'application NAME="..."
 
 L'api key pour google se génére facilement dans l'[aistudio](https://aistudio.google.com/apikey)
 
 ## Lancement
 
+
+### Shell 
 ```bash
 python3 -m venv venv
 . venv/bin/activate
 pip install -r GemmAI/requirements.txt
 cd GemmAI
 flask run --debug -h 0.0.0.0
+
+```
+
+### Docker
+
+```bash
+NAME="gemmai"
+API="..."
+docker built -t $NAME .
+docker run -d -n $NAME -env API=$API -p XXXX:8090 $NAME
+
 ```
 
 

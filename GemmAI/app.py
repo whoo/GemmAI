@@ -124,7 +124,7 @@ def chat():
     config=types.GenerateContentConfig(
           system_instruction= system_instruction)
 
-    content=info['text']
+    content=info['text'] or "je n'ai rien demande"
     response= client.models.generate_content(
             model=model,
             config=config,
