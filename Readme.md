@@ -24,6 +24,10 @@ python3 -m venv venv
 pip install -r GemmAI/requirements.txt
 cd GemmAI
 flask run --debug -h 0.0.0.0
+# Create user
+flask shell
+>> User(username='uname',password='clearpwd').save()
+
 
 ```
 
