@@ -33,7 +33,10 @@ flask run --debug -h 0.0.0.0
 NAME="gemmai"
 API="..."
 docker built -t $NAME .
-docker run -d -n $NAME -env API=$API -p XXXX:8090 $NAME
+docker run -d -n $NAME -env API=$API -p XXXX:9080 $NAME
+
+ docker exec -it gemmai flask shell
+ >> User(username='uname',password='clearpwd').save()
 
 ```
 
